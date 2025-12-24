@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default async function ProductDetail({ params }: Props) {
-  const { id } = await params; // ✅ REQUIRED in Next.js 14+
+  const { id } = await params; 
 
   const res = await fetch(`https://dummyjson.com/products/${id}`, {
     next: { revalidate: 60 },
