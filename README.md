@@ -117,4 +117,32 @@ If you want, I can:
 - Add example `.env.local` and a small `src/types` file with the interfaces above.
 
 ---
+
+Recent additions (Dec 2025)
+
+- Implemented product categories, search, pagination, and client-side caching in `src/store/productsStore.ts`.
+- Added UI controls (search bar, category dropdown, pagination) to the products list at [src/app/dashboard/products/page.tsx](src/app/dashboard/products/page.tsx#L1-L200).
+- Introduced a small client-side image carousel component at [src/components/ImagesCarousel.tsx](src/components/ImagesCarousel.tsx#L1-L200) and integrated it into the product detail page.
+- Added basic in-memory caching to `src/store/usersStore.ts` to reduce redundant API calls while paging/searching.
+
+Why Zustand was chosen
+
+- Small API surface and minimal boilerplate compared to Redux.
+- Easier to colocate async actions inside stores for clear data flow.
+- Lightweight and fast for small-to-medium apps; straightforward to persist selective state.
+
+Caching strategy implemented
+
+- In-memory per-tab caches keyed by query parameters (e.g. `skip-search-category`).
+- Short TTLs (3-5 minutes) to balance data freshness and minimizing API requests.
+- Cached results are returned instantly while avoiding repeated calls when users toggle pages/filters.
+
+Pending / Suggested improvements
+
+- Add visual loading and error states for lists and detail pages.
+- Add tests for stores and components.
+- Persist auth token to a more secure storage or use server-side session as required.
+- Expand product details with a specs table and thumbnail strip.
+
+---
 Generated on: see project commit history
