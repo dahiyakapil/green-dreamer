@@ -83,5 +83,25 @@ Open http://localhost:3000
 - Components use `React.memo`, `useCallback`, and `useMemo` where beneficial to limit re-renders.
 
 
+## Screenshots
+Login Page
+<img width="1918" height="971" alt="image" src="https://github.com/user-attachments/assets/6932c0ad-d4d4-494b-acfa-10e8931adf81" />
+
+Dashboard Users Page
+<img width="1918" height="962" alt="image" src="https://github.com/user-attachments/assets/2af31072-1a16-4cb5-9521-169fcf0dce08" />
+
+User's Personal Details
+<img width="1918" height="967" alt="image" src="https://github.com/user-attachments/assets/2c0975a4-6f67-4c7a-b3cc-386b895e23b6" />
+
+
+Dashboard Products Page
+<img width="1918" height="972" alt="image" src="https://github.com/user-attachments/assets/b0391d1a-358c-4f7c-8478-c9d90838cfd8" />
+
+
+Product Details
+<img width="1918" height="970" alt="image" src="https://github.com/user-attachments/assets/f2a1e470-cac5-4e0b-ba9c-a47f94de68db" />
+
+Product Category Page
+<img width="1918" height="965" alt="image" src="https://github.com/user-attachments/assets/b080c911-abc5-4eca-bd2e-bcc7b0e09575" />
 
 
