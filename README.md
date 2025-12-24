@@ -82,18 +82,6 @@ Open http://localhost:3000
 - Uses API-side pagination (`limit`/`skip`) to avoid fetching large datasets.
 - Components use `React.memo`, `useCallback`, and `useMemo` where beneficial to limit re-renders.
 
-## Useful Files
-- API client: [src/services/api.ts](src/services/api.ts)
-- Auth store: [src/store/authStore.ts](src/store/authStore.ts)
-- Protected route wrapper: [src/components/ProtectedRoute.tsx](src/components/ProtectedRoute.tsx)
 
-## Next Steps / Suggestions
-- Add unit and integration tests for stores and critical components.
-- Improve loading and error states across list/detail pages.
-- Add E2E tests for auth and protected routes.
 
-## Contributing
-- Fork the repository, create a feature branch, and submit a pull request with a concise description of changes.
 
----
-Generated/updated to present the project as an assessment submission.
