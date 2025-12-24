@@ -1,4 +1,5 @@
-import { Box, Typography, Container, Grid, Card, CardContent, Chip } from "@mui/material";
+import { Box, Typography, Container, Card, CardContent, Chip } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import Link from "next/link";
 import ImagesCarousel from "@/components/ImagesCarousel";
 
