@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Container, Grid, Card, CardContent, Chip } from "@mui/material";
 import Link from "next/link";
 import ImagesCarousel from "@/components/ImagesCarousel";
 
@@ -15,19 +15,36 @@ export default async function ProductDetail({ params }: Props) {
   const product = await res.json();
 
   return (
-    <Box p={3}>
+    <Container className="container" sx={{ py: 4 }}>
       <Box mb={2}>
-        <Link href="/dashboard/products">← Back to Products</Link>
+        <Link href="/dashboard/products" style={{ color: 'inherit', textDecoration: 'none' }}>
+          <span className="muted">← Back to Products</span>
+        </Link>
       </Box>
 
-      {/* images carousel rendered client-side */}
-      <ImagesCarousel images={product.images ?? [product.thumbnail]} />
+      <Card className="card">
+        <CardContent>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <ImagesCarousel images={product.images ?? [product.thumbnail]} />
+            </Grid>
 
-      <Typography variant="h5" gutterBottom>{product.title}</Typography>
-      <Typography paragraph>{product.description}</Typography>
-      <Typography>Price: ${product.price}</Typography>
-      <Typography>Rating: {product.rating}</Typography>
-      <Typography>Category: {product.category}</Typography>
-    </Box>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" gutterBottom sx={{ mb: 1 }}>{product.title}</Typography>
+              <Typography variant="body1" className="muted" paragraph>{product.description}</Typography>
+
+              <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 2 }}>
+                <Chip label={`$${product.price}`} color="primary" />
+                <Chip label={`Rating: ${product.rating}`} variant="outlined" />
+                <Chip label={product.category} variant="outlined" />
+              </Box>
+
+              <Typography variant="subtitle1">Brand: {product.brand}</Typography>
+              <Typography variant="subtitle2" className="muted">Stock: {product.stock}</Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Container>
   );
 }

@@ -60,8 +60,9 @@ export default function ProductsPage() {
   };
 
   return (
-    <Box p={3}>
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mb={2} alignItems="center">
+    <>
+      <Box sx={{ py: 2 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mb={2} alignItems="center">
         <TextField
           label="Search Products"
           value={search}
@@ -92,6 +93,7 @@ export default function ProductsPage() {
           </Select>
         </FormControl>
       </Stack>
+      </Box>
 
       <Grid container spacing={2}>
         {products.map((p: any) => (
@@ -104,6 +106,6 @@ export default function ProductsPage() {
       <Box mt={2} display="flex" justifyContent="center">
         <Pagination count={pageCount} page={page} onChange={(_, value) => setPage(value)} />
       </Box>
-    </Box>
+    </>
   );
 }

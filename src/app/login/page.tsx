@@ -43,14 +43,16 @@ export default function LoginPage() {
   return (
     <Box
       display="flex"
-      height="100vh"
+      minHeight="100vh"
       alignItems="center"
       justifyContent="center"
+      sx={{ px: 2 }}
     >
-      <Paper sx={{ p: 4, width: 350 }}>
-        <Typography variant="h5" mb={2}>
-          Admin Login
-        </Typography>
+      <Paper className="card" sx={{ p: 4, width: '100%', maxWidth: 420 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+          <Box sx={{ bgcolor: 'primary.main', color: 'white', width: 48, height: 48, borderRadius: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>G</Box>
+          <Typography variant="h5">Admin Login</Typography>
+        </Box>
 
         <form onSubmit={handleSubmit}>
           {error && (

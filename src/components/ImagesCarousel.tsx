@@ -13,14 +13,14 @@ export default function ImagesCarousel({ images }: { images: string[] }) {
 
   return (
     <Box mb={2}>
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <IconButton onClick={prev} size="small">
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
+        <IconButton onClick={prev} size="small" sx={{ bgcolor: 'background.paper' }}>
           <ArrowBackIosNewIcon />
         </IconButton>
-        <Box flex={1}>
-          <CardMedia component="img" image={images[idx]} alt={`image-${idx}`} sx={{ maxHeight: 360, objectFit: 'contain' }} />
+        <Box flex={1} className="card" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 1 }}>
+          <CardMedia component="img" image={images[idx]} alt={`image-${idx}`} sx={{ maxHeight: 360, objectFit: 'contain', borderRadius: 8 }} />
         </Box>
-        <IconButton onClick={next} size="small">
+        <IconButton onClick={next} size="small" sx={{ bgcolor: 'background.paper' }}>
           <ArrowForwardIosIcon />
         </IconButton>
       </Stack>

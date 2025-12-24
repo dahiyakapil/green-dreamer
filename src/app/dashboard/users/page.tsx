@@ -15,22 +15,24 @@ export default function UsersPage() {
   }, [page, search]);
 
   return (
-    <Box p={3}>
-      <TextField
-        label="Search User"
-        onChange={(e) => setSearch(e.target.value)}
-        fullWidth
-        sx={{ mb: 2 }}
-      />
+    <>
+      <Box sx={{ py: 2 }}>
+        <TextField
+          label="Search User"
+          onChange={(e) => setSearch(e.target.value)}
+          fullWidth
+          sx={{ mb: 2 }}
+        />
 
-      <UserTable users={users} />
+        <UserTable users={users} />
 
-      <Pagination
-        count={Math.ceil(total / 10)}
-        page={page}
-        onChange={(_, value) => setPage(value)}
-        sx={{ mt: 2 }}
-      />
-    </Box>
+        <Pagination
+          count={Math.ceil(total / 10)}
+          page={page}
+          onChange={(_, value) => setPage(value)}
+          sx={{ mt: 2 }}
+        />
+      </Box>
+    </>
   );
 }
