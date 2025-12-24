@@ -27,6 +27,38 @@ export default function ProductsPage() {
 
   const pageCount = useMemo(() => Math.max(1, Math.ceil((total || 0) / 10)), [total]);
 
+  const getCategoryLabel = (c: any) => {
+    if (c == null) return "";
+    if (typeof c === "string") return c;
+    if (typeof c === "object") {
+      if (typeof c.name === "string") return c.name;
+      if (typeof c.slug === "string") return c.slug;
+      if (typeof c.title === "string") return c.title;
+      try {
+        return JSON.stringify(c);
+      } catch (e) {
+        return String(c);
+      }
+    }
+    return String(c);
+  };
+
+  const getCategoryValue = (c: any) => {
+    if (c == null) return "";
+    if (typeof c === "string") return c;
+    if (typeof c === "object") {
+      if (typeof c.slug === "string") return c.slug;
+      if (typeof c.name === "string") return c.name;
+      if (typeof c.id === "string" || typeof c.id === "number") return String(c.id);
+      try {
+        return JSON.stringify(c);
+      } catch (e) {
+        return String(c);
+      }
+    }
+    return String(c);
+  };
+
   return (
     <Box p={3}>
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mb={2} alignItems="center">
@@ -46,9 +78,17 @@ export default function ProductsPage() {
             onChange={(e) => { setCategory(String(e.target.value)); setPage(1); }}
           >
             <MenuItem value="">All</MenuItem>
-            {categories.map((c: string) => (
-              <MenuItem key={c} value={c}>{c}</MenuItem>
-            ))}
+            {categories.map((c: any, i: number) => {
+              const val = getCategoryValue(c);
+              const label = getCategoryLabel(c);
+              const key = typeof c === 'object' && (c?.id || c?.slug || c?.name)
+                ? `${c.id ?? c.slug ?? c.name}`
+                : `${label}-${i}`;
+
+              return (
+                <MenuItem key={key} value={val}>{label}</MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </Stack>
