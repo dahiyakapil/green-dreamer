@@ -1,4 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 type PageProps = {
   params: Promise<{
@@ -28,14 +39,68 @@ export default async function UserDetail({ params }: PageProps) {
 
     const user = await res.json();
 
+    const fullName = `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim();
+    const avatarSrc = user.image ?? user.avatar ?? null;
+
     return (
       <Box p={3}>
-        <Typography variant="h5">
-          {user.firstName} {user.lastName}
-        </Typography>
-        <Typography>Email: {user.email}</Typography>
-        <Typography>Phone: {user.phone}</Typography>
-        <Typography>Company: {user.company?.name ?? "-"}</Typography>
+        <Card elevation={2}>
+          <CardContent>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <Avatar
+                  src={avatarSrc}
+                  sx={{ width: 96, height: 96, bgcolor: "primary.main" }}
+                  alt={fullName || "User"}
+                >
+                  {(!avatarSrc && fullName) ? fullName.charAt(0) : null}
+                </Avatar>
+              </Grid>
+
+              <Grid item xs>
+                <Stack spacing={0.5}>
+                  <Typography variant="h5">{fullName || "Unknown User"}</Typography>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography color="text.secondary">{user.username}</Typography>
+                    <Chip label={user.gender} size="small" />
+                  </Stack>
+                  <Typography color="text.secondary">{user.company?.name ?? "-"}</Typography>
+                </Stack>
+              </Grid>
+
+              <Grid item>
+                <Stack direction="row" spacing={1}>
+                  <Button variant="outlined" size="small">Message</Button>
+                  <Button variant="contained" size="small">Edit</Button>
+                </Stack>
+              </Grid>
+            </Grid>
+
+            <Divider sx={{ my: 2 }} />
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">Contact</Typography>
+                  <Typography>Email: {user.email}</Typography>
+                  <Typography>Phone: {user.phone}</Typography>
+                  <Typography>Birthdate: {user.birthDate ?? "-"}</Typography>
+                </Stack>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Stack spacing={1}>
+                  <Typography variant="subtitle2">Address</Typography>
+                  <Typography>
+                    {user.address?.address ?? ""}
+                    {user.address ? ", " + (user.address?.city ?? "") : ""}
+                  </Typography>
+                  <Typography>{user.address?.postalCode ?? ""}</Typography>
+                </Stack>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
       </Box>
     );
   } catch (err: any) {
