@@ -6,4 +6,3 @@ build/
 .env
 coverage/
 .env.local
-.env.local
