@@ -97,8 +97,11 @@ User's Personal Details
 Dashboard Products Page
 <img width="1918" height="972" alt="image" src="https://github.com/user-attachments/assets/b0391d1a-358c-4f7c-8478-c9d90838cfd8" />
 
+
 Product Details
 <img width="1918" height="970" alt="image" src="https://github.com/user-attachments/assets/f2a1e470-cac5-4e0b-ba9c-a47f94de68db" />
 
+Product Category Page
+<img width="1918" height="965" alt="image" src="https://github.com/user-attachments/assets/b080c911-abc5-4eca-bd2e-bcc7b0e09575" />
 
 
