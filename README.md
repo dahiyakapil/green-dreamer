@@ -26,123 +26,74 @@ Tech stack & dependencies
 Exact dependencies (from `package.json`)
 - next 16.1.1
 - react 19.2.3, react-dom 19.2.3
-- @mui/material 7.3.6, @emotion/react, @emotion/styled
-- next-auth 4.24.13
-- axios 1.13.2
-- zustand 5.0.9
+# Green Dreamer — Next.js Dashboard (Assessment-ready)
 
-Project structure (high level)
-- [src/app](src/app) – Next.js app routes and pages
-	- [src/app/page.tsx](src/app/page.tsx) – public root page
-	- [src/app/dashboard](src/app/dashboard) – dashboard layout and child pages
-	- [src/app/login/page.tsx](src/app/login/page.tsx)
-	- [src/app/api/auth/[...nextauth]/route.ts](src/app/api/auth/[...nextauth]/route.ts)
-- [src/components](src/components) – UI components
-- [src/services/api.ts](src/services/api.ts) – API helpers (axios)
-- [src/store](src/store) – small client-side stores
-- [src/theme/muiTheme.ts](src/theme/muiTheme.ts) – MUI theme configuration
+## Overview
+Green Dreamer is a small Next.js (app router) dashboard demo built with Material UI and Zustand. It demonstrates authentication, protected dashboard routes, user and product listing/detail pages, a simple Axios API client, and lightweight client-side stores.
 
-Data types (what the app uses)
-The app primarily works with two domain types: Users and Products. Below are example TypeScript-style shapes used as a guide (your actual types may vary):
+This repository has been adapted to meet the "Help Study Abroad" frontend technical assessment using the public DummyJSON API (https://dummyjson.com/).
 
-```
-interface User {
-	id: string | number
-	name?: string
-	email?: string
-	role?: string // e.g. "admin" | "user"
-	createdAt?: string
-}
+## Summary of Assessment Mapping
+- Authentication: NextAuth route at [src/app/api/auth/[...nextauth]/route.ts](src/app/api/auth/[...nextauth]/route.ts). Client auth state in the store at [src/store/authStore.ts](src/store/authStore.ts).
+- Users: list, search, pagination, and single-user view at [src/app/dashboard/users](src/app/dashboard/users).
+- Products: paginated/searchable product grid, category filter, and product details with an image carousel at [src/components/ImagesCarousel.tsx](src/components/ImagesCarousel.tsx).
+- State: `zustand` stores under [src/store](src/store) manage auth, users, and products; async actions and lightweight in-memory caching are implemented.
 
-interface Product {
-	id: string | number
-	name: string
-	description?: string
-	price?: number
-	sku?: string
-	createdAt?: string
-}
-
-// Auth session/token shapes are handled by NextAuth and may include
-// fields like `user`, `expires`, and provider-specific tokens.
-```
-
-Environment variables
-The project uses NextAuth for authentication and may require environment variables for proper operation. Common vars to set in a local `.env.local` file:
-- `NEXTAUTH_URL` — http://localhost:3000 (or your deployed URL)
-- `NEXTAUTH_SECRET` — a secure random string used by NextAuth
-- Provider credentials (if using OAuth providers): e.g. `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, etc.
-
-How to run (local development)
-Install dependencies and start the dev server:
+## Quick Start
+1. Install dependencies:
 
 ```bash
 npm install
+```
+
+2. (Optional) Create `.env.local` for NextAuth when running locally:
+
+- `NEXTAUTH_URL`=http://localhost:3000
+- `NEXTAUTH_SECRET`=<secure-random-string>
+
+3. Run development server:
+
+```bash
 npm run dev
 ```
 
 Open http://localhost:3000
 
-Available npm scripts (from `package.json`)
-- `npm run dev` — start Next.js in development mode
-- `npm run build` — build for production
-- `npm run start` — run the production build
-- `npm run lint` — run ESLint
+## What’s Implemented (Checklist)
+- Authentication: NextAuth endpoint + client login page ([src/app/login/page.tsx](src/app/login/page.tsx)). Token persisted to `zustand` (optional localStorage).
+- Route protection: dashboard routes are protected via the `ProtectedRoute` wrapper.
+- Users list: responsive MUI table/cards with API-side pagination and search.
+- User detail: dedicated page with full user information and a "Back to Users" link.
+- Products list: responsive MUI grid with pagination, search, and category filter.
+- Product detail: image carousel, full description, and "Back to Products" link.
+- State management: `zustand` stores for auth, users, and products with async API actions and in-memory caching.
 
-Notes and development tips
-- Authentication: the NextAuth route is defined at [src/app/api/auth/[...nextauth]/route.ts](src/app/api/auth/[...nextauth]/route.ts). Configure providers and secrets there (or via environment variables).
-- Protected routes: The dashboard area is intended to be protected. See `ProtectedRoute` in [src/components/ProtectedRoute.tsx](src/components/ProtectedRoute.tsx) for how client-side protection is implemented.
-- API client: [src/services/api.ts](src/services/api.ts) centralizes HTTP requests using `axios`. Use it to implement server calls and handle headers, tokens, and interceptors.
-- State: `zustand` stores under [src/store](src/store) provide small client-side state for auth, products, and users.
+## Architecture & Rationale
+- UI: Material-UI (MUI) for consistent, accessible components and responsive layouts.
+- State: Zustand chosen for its small footprint, simple API, and ability to colocate async actions and caching inside stores—ideal for small-to-medium demos.
+- Data: DummyJSON (https://dummyjson.com/) is used for all backend endpoints (auth, users, products).
 
-Contributing
-- Fork the repo, create a feature branch, open a pull request.
-- Keep changes focused and add a short description of what you changed and why.
+### Caching strategy (brief)
+- List responses are cached in-memory keyed by query params (e.g. `users?limit=10&skip=0&q=...`).
+- Short TTL (minutes) keeps data reasonably fresh while reducing redundant requests.
+- Caching improves perceived performance when navigating between paginated/listed views.
 
-Troubleshooting
-- If auth doesn't work locally, confirm `NEXTAUTH_URL` and `NEXTAUTH_SECRET` are set and that provider credentials (if any) are configured.
-- Check the server console for NextAuth or API errors when using the dashboard.
+## Performance & Best Practices
+- Uses API-side pagination (`limit`/`skip`) to avoid fetching large datasets.
+- Components use `React.memo`, `useCallback`, and `useMemo` where beneficial to limit re-renders.
 
-Next steps (ideas)
-- Add explicit TypeScript interfaces and share them in `src/types`.
-- Add API routes for products/users if you want a full-stack demo (currently app expects an API client).
+## Useful Files
+- API client: [src/services/api.ts](src/services/api.ts)
+- Auth store: [src/store/authStore.ts](src/store/authStore.ts)
+- Protected route wrapper: [src/components/ProtectedRoute.tsx](src/components/ProtectedRoute.tsx)
 
-Files to inspect quickly
-- [src/services/api.ts](src/services/api.ts)
-- [src/store/authStore.ts](src/store/authStore.ts)
-- [src/components/ProtectedRoute.tsx](src/components/ProtectedRoute.tsx)
+## Next Steps / Suggestions
+- Add unit and integration tests for stores and critical components.
+- Improve loading and error states across list/detail pages.
+- Add E2E tests for auth and protected routes.
 
-If you want, I can:
-- Commit this README change for you.
-- Add example `.env.local` and a small `src/types` file with the interfaces above.
-
----
-
-Recent additions (Dec 2025)
-
-- Implemented product categories, search, pagination, and client-side caching in `src/store/productsStore.ts`.
-- Added UI controls (search bar, category dropdown, pagination) to the products list at [src/app/dashboard/products/page.tsx](src/app/dashboard/products/page.tsx#L1-L200).
-- Introduced a small client-side image carousel component at [src/components/ImagesCarousel.tsx](src/components/ImagesCarousel.tsx#L1-L200) and integrated it into the product detail page.
-- Added basic in-memory caching to `src/store/usersStore.ts` to reduce redundant API calls while paging/searching.
-
-Why Zustand was chosen
-
-- Small API surface and minimal boilerplate compared to Redux.
-- Easier to colocate async actions inside stores for clear data flow.
-- Lightweight and fast for small-to-medium apps; straightforward to persist selective state.
-
-Caching strategy implemented
-
-- In-memory per-tab caches keyed by query parameters (e.g. `skip-search-category`).
-- Short TTLs (3-5 minutes) to balance data freshness and minimizing API requests.
-- Cached results are returned instantly while avoiding repeated calls when users toggle pages/filters.
-
-Pending / Suggested improvements
-
-- Add visual loading and error states for lists and detail pages.
-- Add tests for stores and components.
-- Persist auth token to a more secure storage or use server-side session as required.
-- Expand product details with a specs table and thumbnail strip.
+## Contributing
+- Fork the repository, create a feature branch, and submit a pull request with a concise description of changes.
 
 ---
-Generated on: see project commit history
+Generated/updated to present the project as an assessment submission.
